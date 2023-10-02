@@ -547,23 +547,6 @@ def alzheimer(W0, DE, dyn_y0, tau_seed=False, beta_seed=False, seed_amount=0.1, 
         rhythms_i = (W_t, a, b, t)
         spread_sol['rhythms'].append(rhythms_i)
         
-        # in the future, potential feedback changes from dynamics to spreading here
-        if feedback:
-            # update parameters
-            t_res = t - t0
-            # euler
-            #pf = pf + t_res * kf * (pf - pf_0) * ((avg_mod - mod0) - (pf - pf_0))
-            # RK4
-            rk1 = kf * (pf - pf_0) * ((avg_mod - mod0) - (pf - pf_0))
-            rk2 = kf * ((pf+t_res*rk1/2) - pf_0) * ((avg_mod - mod0) - ((pf+t_res*rk1/2) - pf_0))
-            rk3 = kf * ((pf+t_res*rk2/2) - pf_0) * ((avg_mod - mod0) - ((pf+t_res*rk2/2) - pf_0))
-            rk4 = kf * ((pf+t_res*rk3) - pf_0) * ((avg_mod - mod0) - ((pf+t_res*rk3) - pf_0))
-            pf = pf + 1/6 * (rk1 + 2*rk2 + 2*rk3 + rk4) * t_res
-            print(pf)
-            # append parameters
-            pf_save = np.transpose(np.array([pf]))  # need correct np dimensions
-            spread_sol['pf'] = np.concatenate((spread_sol['pf'], pf_save), axis=1)
-
         # update spreading initial values, spread_y0, and start of simulation, t0
         spread_y0 = sol.y[:,-1]
         t0 = t

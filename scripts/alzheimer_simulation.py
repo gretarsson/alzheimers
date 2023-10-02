@@ -11,18 +11,18 @@ import seaborn as sns
 # Here we simulate Alzheimers' disease
 # and plot the results
 # -------------------------------------
-# file paths, where to save dynamics (oscillations) and spreading (heterodimer model)
+# file paths, where to save dynamics (oscillations) and spreading (heterodimer model) solutions
 file_name = 'alzheimers_default'
-dyn_save_path = '../simulations/' + file_name +  '_neural.p'
-spread_save_path = '../simulations/'+ file_name + '_spread.p'
-solve = True
+dyn_save_path = './' + file_name +  '_neural.p'
+spread_save_path = './'+ file_name + '_spread.p'
+solve = True  # whether to run and save simulation (True), or load simulation (False)
 
 # dynamical (oscillator) settings
 dyn_step = 1/1250; dyn_atol = 10**-6; dyn_rtol = 10**-4
-dyn_tspan = (0,15); t_stamps = np.linspace(0,35,11)
-dyn_cutoff = 5  # time to cutoff for analysis
+dyn_tspan = (0,11); t_stamps = np.linspace(0,35,11)
+dyn_cutoff = 1  # time to cutoff for analysis
 trials = 10  # number of repetitions
-dbands = [[8,12]]  # frequency bands to analyze 
+bands = [[8,12]]  # frequency bands to analyze 
 delay_dim = 40  # discretization dimension of delay matrix
 
 # spread (heterodimer) settings
@@ -38,8 +38,6 @@ colours = sns.color_palette('hls', len(lobe_names)+4)
 wiggle = 0.1  # wiggles trials on same x tick
 
 # Read Budapest coupling matrix
-#N = 83
-#W = np.zeros((N,N))
 with open('../data/CouplingMatrixInTime-000.csv', 'r') as f:
     W = list(csv.reader(f, delimiter=','))
 W = np.array(W, dtype=float)
@@ -63,7 +61,7 @@ a0 = 1  * 2; ai = 1  * 2; aii = 1 * 2; api = 0.75 * 2
 # tau
 b0 = 1 * 2; bi = 1 * 2; bii = 1 * 2; biii = 6 * 2; bpi = 1.33 * 2
     # concentration-to-damage
-k1 = 1; k2 = 1; k3 = 0; gamma = 0.1
+k1 = 1; k2 = 1; k3 = 0; gamma = 0.0
 # damage-to-NNM
 c1 = 0.8 ; c2 = 1.8; c3 = 0.4 
 # NNM variable parameters 
